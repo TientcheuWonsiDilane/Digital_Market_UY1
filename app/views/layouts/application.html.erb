@@ -1,31 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Market" %></title>
+    <title><%= content_for(:title) || "DigiMarket UY1" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Market">
+    <meta name="application-name" content="DigiMarket UY1">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
+  <body class="p-0 m-0 border-box bg-gray-50 antialiased min-h-screen flex flex-col">
 
-  <body>
-    <main class="container mx-auto px-5">
+    <%# Alerts fixed overlay - never pushes content %>
+    <div class="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
+      <div class="max-w-7xl mx-auto px-4 pt-4 pointer-events-auto">
+        <%= render "layouts/alerts" %>
+      </div>
+    </div>
+
+    <%# Header: same component everywhere - absolute/transparent on home %>
+    <%= render "layouts/header" %>
+
+    <main class="flex-1">
       <%= yield %>
     </main>
+
+    <%# Footer (pas sur home) %>
+    <% unless controller_name == "pages" && action_name == "home" %>
+      <footer class="bg-white border-t border-emerald-100 py-10 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-600 to-green-400 flex items-center justify-center shadow-sm">
+                <span class="text-white font-black text-sm">DM</span>
+              </div>
+              <span class="text-base font-black tracking-tight text-emerald-800">DigiMarket<span class="text-green-500 font-medium text-xs ml-0.5">UY1</span></span>
+            </div>
+            <div class="flex items-center gap-6 text-xs text-gray-400">
+              <a href="<%= stores_path %>" class="hover:text-emerald-600 transition-colors">Boutiques</a>
+              <a href="<%= items_path %>" class="hover:text-emerald-600 transition-colors">Produits</a>
+            </div>
+            <p class="text-xs text-gray-400">&copy; <%= Time.current.year %> DigiMarket UY1. Tous droits réservés.</p>
+          </div>
+        </div>
+      </footer>
+    <% end %>
   </body>
 </html>

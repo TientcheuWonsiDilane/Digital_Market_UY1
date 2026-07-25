@@ -1,3 +1,214 @@
-<div>
-  
+<div id="home" class="w-full relative overflow-hidden bg-gradient-to-b from-white via-green-50/30 to-white text-gray-800">
+
+  <!-- Hero Section -->
+  <header class="relative min-h-[calc(100vh-64px)] md:min-h-[750px] flex flex-col justify-between overflow-hidden px-6 md:px-24 pt-12 pb-16">
+    
+    <!-- Floating Dollar Signs - Active autour des images -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <div class="dollar-float df-1 text-emerald-400/25">$</div>
+      <div class="dollar-float df-2 text-emerald-400/15">$</div>
+      <div class="dollar-float df-3 text-emerald-400/20">$</div>
+      <div class="dollar-float df-4 text-emerald-400/18">$</div>
+      <div class="dollar-float df-5 text-emerald-400/25">$</div>
+      <div class="dollar-float df-6 text-emerald-400/10">$</div>
+      <div class="dollar-float df-7 text-emerald-400/20">$</div>
+      <div class="dollar-float df-8 text-emerald-400/15" style="left: 60%; animation-duration: 14s; animation-delay: 4s; font-size: 3rem;">$</div>
+      <div class="dollar-float df-9 text-emerald-400/12" style="left: 75%; animation-duration: 18s; animation-delay: 7s; font-size: 2rem;">$</div>
+      <div class="dollar-float df-10 text-emerald-400/20" style="left: 45%; animation-duration: 12s; animation-delay: 3s; font-size: 2.8rem;">$</div>
+    </div>
+
+    <!-- Main Hero Body -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto w-full relative z-10">
+      
+      <!-- Left Column: Slogan, Title, CTA -->
+      <div class="lg:col-span-7 flex flex-col items-start text-left space-y-6 max-w-2xl">
+        <div class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-4 py-1.5 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Plateforme étudiante N°1 à l'UY1
+        </div>
+        <h2 class="text-4xl md:text-6xl font-black tracking-tight text-emerald-950 leading-tight">
+          Vendez et achetez sur le campus avec <span class="bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent">DigiMarket UY1</span>
+        </h2>
+        
+        <p class="text-lg text-gray-600 leading-relaxed max-w-xl">
+          La plateforme d'échange idéale pour les étudiants de l'Université de Yaoundé I. Créez votre boutique en quelques clics, proposez vos articles, livres, électroniques ou services, et achetez directement auprès de vos camarades de campus.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
+          <a href="<%= items_path %>" class="inline-flex items-center justify-center gap-2 text-center text-white bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 px-8 py-4 rounded-full font-bold shadow-lg shadow-emerald-600/20 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95">
+            <span>Explorer les produits</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+          <a href="<%= stores_path %>" class="inline-flex items-center justify-center text-center text-emerald-700 hover:text-emerald-900 bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100 px-8 py-4 rounded-full font-bold transition-all duration-300">
+            Voir les boutiques
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Superposing Stacked Images with Dollar Floats -->
+      <div class="lg:col-span-5 flex justify-center lg:justify-end items-center relative w-full h-[420px] md:h-[650px]">
+        <div class="relative w-[340px] h-[400px] md:w-[580px] md:h-[640px]">
+          
+          <!-- Dollar signs spécifiques autour des images -->
+          <div class="absolute -top-4 -right-4 text-emerald-400/25 text-4xl font-bold animate-gentle-float z-50">$</div>
+          <div class="absolute -bottom-2 -left-6 text-emerald-400/20 text-5xl font-bold animate-gentle-float z-50" style="animation-delay: 1.5s;">$</div>
+          <div class="absolute top-1/4 -left-8 text-emerald-400/15 text-3xl font-bold animate-gentle-float z-50" style="animation-delay: 3s;">$</div>
+          <div class="absolute bottom-1/3 -right-6 text-emerald-400/20 text-3xl font-bold animate-gentle-float z-50" style="animation-delay: 4.5s;">$</div>
+          
+          <!-- Image 1 (Bottom Layer) -->
+          <div class="absolute bottom-2 right-2 w-[190px] h-[260px] md:w-[320px] md:h-[420px] rounded-3xl overflow-hidden card-glow z-10 transform rotate-6 hover:z-40 transition-all duration-500">
+            <%= image_tag "hero_img_1.png", class: "w-full h-full object-cover", alt: "Produits étudiants UY1" %>
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/60 via-transparent to-transparent flex items-end p-4">
+              <span class="text-white text-xs font-semibold tracking-wide">Électroniques & Cours</span>
+            </div>
+          </div>
+          
+          <!-- Image 2 (Middle Layer) -->
+          <div class="absolute bottom-10 right-16 w-[190px] h-[260px] md:bottom-14 md:right-28 md:w-[320px] md:h-[420px] rounded-3xl overflow-hidden card-glow z-20 transform -rotate-6 hover:z-40 transition-all duration-500">
+            <%= image_tag "hero_img_2.png", class: "w-full h-full object-cover", alt: "Vente étudiant campus UY1" %>
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/60 via-transparent to-transparent flex items-end p-4">
+              <span class="text-white text-xs font-semibold tracking-wide">Vente en direct</span>
+            </div>
+          </div>
+          
+          <!-- Image 3 (Top Layer) -->
+          <div class="absolute bottom-18 right-32 w-[190px] h-[260px] md:bottom-26 md:right-54 md:w-[320px] md:h-[420px] rounded-3xl overflow-hidden card-glow z-30 transform rotate-3 hover:z-40 transition-all duration-500">
+            <%= image_tag "hero_img_3.png", class: "w-full h-full object-cover", alt: "Étudiant UY1 connecté" %>
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/60 via-transparent to-transparent flex items-end p-4">
+              <span class="text-white text-xs font-semibold tracking-wide">Acheteurs branchés</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="flex justify-center w-full pt-8 relative z-10">
+      <a href="#buyers-section" class="text-emerald-400 hover:text-emerald-600 transition-colors animate-bounce">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </a>
+    </div>
+
+  </header>
+
+  <!-- How It Works for Buyers Section -->
+  <section id="buyers-section" class="py-24 bg-white relative z-10 px-6 md:px-24 border-t border-emerald-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="text-emerald-600 font-bold uppercase tracking-wider text-sm">Acheter</span>
+        <h3 class="text-3xl md:text-5xl font-black tracking-tight text-emerald-950 mt-3">
+          Trouvez des pépites sur le campus en un clin d'œil
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        
+        <!-- Image -->
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white shadow-emerald-600/10 group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-600/20 to-transparent mix-blend-overlay"></div>
+          <%= image_tag "buyer_how_to.png", class: "w-full h-[320px] md:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105", alt: "Comment acheter sur DigiMarket" %>
+          <div class="absolute top-3 right-3 text-emerald-400/30 text-3xl font-bold animate-pulse">$</div>
+        </div>
+        
+        <!-- Steps -->
+        <div class="space-y-8">
+          
+          <div class="flex gap-5 items-start p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50 hover:bg-emerald-50 transition-colors">
+            <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
+              1
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-emerald-950">Explorez le fil d'actualité</h4>
+              <p class="text-gray-600 mt-1">Parcourez les catégories de produits mis en vente par d'autres étudiants de l'UY1. Filtrez selon vos besoins.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-5 items-start p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50 hover:bg-emerald-50 transition-colors">
+            <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
+              2
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-emerald-950">Contactez le vendeur</h4>
+              <p class="text-gray-600 mt-1">Un produit vous plaît ? Cliquez pour contacter le vendeur directement par messagerie pour discuter du prix.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-5 items-start p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50 hover:bg-emerald-50 transition-colors">
+            <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
+              3
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-emerald-950">Finalisez l'achat sur le campus</h4>
+              <p class="text-gray-600 mt-1">Fixez un point de rendez-vous sur le campus pour inspecter le produit et finaliser l'achat en toute sécurité.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works for Sellers Section -->
+  <section id="sellers-section" class="py-24 bg-gradient-to-b from-white via-green-50/20 to-white relative z-10 px-6 md:px-24">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="text-emerald-600 font-bold uppercase tracking-wider text-sm">Vendre</span>
+        <h3 class="text-3xl md:text-5xl font-black tracking-tight text-emerald-950 mt-3">
+          Monétisez ce que vous n'utilisez plus
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        
+        <!-- Steps -->
+        <div class="space-y-8">
+          
+          <div class="flex gap-5 items-start p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50 hover:bg-emerald-50 transition-colors">
+            <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
+              1
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-emerald-950">Créez votre boutique</h4>
+              <p class="text-gray-600 mt-1">Inscrivez-vous et configurez votre boutique personnalisée en quelques secondes. C'est 100% gratuit et instantané.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-5 items-start p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50 hover:bg-emerald-50 transition-colors">
+            <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
+              2
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-emerald-950">Prenez vos produits en photo</h4>
+              <p class="text-gray-600 mt-1">Prenez en photo votre article depuis votre téléphone, ajoutez les détails et le prix.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-5 items-start p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50 hover:bg-emerald-50 transition-colors">
+            <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
+              3
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-emerald-950">Recevez des messages directs</h4>
+              <p class="text-gray-600 mt-1">Les acheteurs intéressés vous contacteront directement via notre messagerie intégrée.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Image -->
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white shadow-emerald-600/10 group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-600/20 to-transparent mix-blend-overlay"></div>
+          <%= image_tag "seller_how_to.png", class: "w-full h-[320px] md:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105", alt: "Comment vendre sur DigiMarket" %>
+          <div class="absolute top-3 right-3 text-emerald-400/30 text-3xl font-bold animate-pulse">$</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>

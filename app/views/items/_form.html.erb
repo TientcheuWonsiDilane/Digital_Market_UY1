@@ -1,0 +1,49 @@
+<%= form_with(model: item, class: "space-y-6 max-w-2xl") do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 border border-red-200 text-red-600 px-5 py-4 font-medium rounded-2xl mb-6">
+      <h2 class="font-bold mb-2"><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+      <ul class="list-disc ml-6 text-sm">
+        <% item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Product Name", class: "block text-sm font-bold text-emerald-900 mb-1.5" %>
+    <%= form.text_field :name, placeholder: "e.g. iPhone 13 Case", class: "w-full rounded-xl border border-gray-200 px-4 py-3.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all duration-300 #{item.errors[:name].any? ? 'border-red-400' : ''}" %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Description (Rich Text)", class: "block text-sm font-bold text-emerald-900 mb-1.5" %>
+    <%= form.rich_textarea :description, class: "w-full rounded-xl border border-gray-200 px-4 py-3.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all duration-300 #{item.errors[:description].any? ? 'border-red-400' : ''}" %>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div>
+      <%= form.label :price, "Price (FCFA)", class: "block text-sm font-bold text-emerald-900 mb-1.5" %>
+      <%= form.number_field :price, min: 0, placeholder: "e.g. 15000", class: "w-full rounded-xl border border-gray-200 px-4 py-3.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all duration-300 #{item.errors[:price].any? ? 'border-red-400' : ''}" %>
+    </div>
+
+    <div>
+      <%= form.label :category, "Category", class: "block text-sm font-bold text-emerald-900 mb-1.5" %>
+      <%= form.select :category, ["Electronics", "Textbooks", "Clothing", "Furniture", "Food", "Perfumes", "USB Keys", "Phones", "PCs", "Solutions Manual", "Services", "Other"], { prompt: "Select category" }, class: "w-full rounded-xl border border-gray-200 px-4 py-3.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all duration-300 bg-white #{item.errors[:category].any? ? 'border-red-400' : ''}" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :images, "Product Images", class: "block text-sm font-bold text-emerald-900 mb-1.5" %>
+    <%= form.file_field :images, multiple: true, class: "w-full rounded-xl border border-gray-200 px-4 py-3 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-emerald-50 file:text-emerald-700 file:font-bold hover:file:bg-emerald-100 transition-all duration-300 cursor-pointer #{item.errors[:images].any? ? 'border-red-400' : ''}" %>
+    <p class="text-xs text-gray-400 mt-1.5">You can select multiple images. Max 5MB each.</p>
+  </div>
+
+  <% if @stores.any? %>
+    <%= form.hidden_field :store_id, value: @stores.first.id %>
+  <% end %>
+
+  <div class="flex gap-3 pt-2">
+    <%= form.submit class: "bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 text-white font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer text-sm" %>
+    <%= link_to "Cancel", item.persisted? ? item_path(item) : items_path, class: "text-sm font-bold text-gray-500 hover:text-gray-700 px-8 py-3.5 border border-gray-200 rounded-full hover:bg-gray-50 transition-all duration-300 text-center" %>
+  </div>
+<% end %>

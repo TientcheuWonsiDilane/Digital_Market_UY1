@@ -1,0 +1,41 @@
+<div class="w-full min-h-[calc(100vh-64px)] flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-emerald-50/30 p-4 md:p-8 relative overflow-hidden">
+  
+  <!-- Floating Dollars Background -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="dollar-float df-1 text-emerald-500/10">$</div>
+    <div class="dollar-float df-2 text-emerald-500/5">$</div>
+    <div class="dollar-float df-3 text-emerald-500/10">$</div>
+    <div class="dollar-float df-4 text-emerald-500/8">$</div>
+    <div class="dollar-float df-5 text-emerald-500/12">$</div>
+  </div>
+
+  <!-- Form Card -->
+  <div class="w-full max-w-md bg-white rounded-3xl border border-emerald-100 p-8 md:p-10 shadow-xl relative z-10">
+    
+    <!-- Logo & Title -->
+    <div class="flex flex-col items-center mb-8">
+      <a href="/" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-green-400 flex items-center justify-center shadow-md mb-3 hover:scale-105 transition-transform duration-300">
+        <span class="text-white font-black text-xl">DM</span>
+      </a>
+      <h2 class="text-3xl font-black text-emerald-950 text-center">Mot de passe oublié ?</h2>
+      <p class="text-sm text-gray-500 text-center mt-1.5 font-medium">Entrez votre adresse email ci-dessous pour recevoir les instructions de réinitialisation.</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "space-y-5" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :email, "Adresse email", class: "block text-sm font-semibold text-emerald-900 mb-1.5" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "votre.nom@example.com", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
+      </div>
+
+      <div class="actions pt-2">
+        <%= f.submit "Envoyer les instructions", class: "bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 w-full py-3.5 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/25 transition-all duration-300 transform active:scale-[0.98] cursor-pointer text-sm" %>
+      </div>
+    <% end %>
+
+    <div class="mt-8 pt-6 border-t border-gray-100 flex flex-col items-center">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

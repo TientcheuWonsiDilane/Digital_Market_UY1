@@ -1,0 +1,58 @@
+<% content_for :title, "Messages" %>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Page Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-black text-emerald-900">Messages</h1>
+      <p class="text-sm text-gray-500 mt-1">Discutez avec les vendeurs et acheteurs.</p>
+    </div>
+  </div>
+
+  <!-- Conversations List -->
+  <div class="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm">
+    <% if @conversations.any? %>
+      <div class="divide-y divide-gray-100">
+        <% @conversations.each do |conv| %>
+          <%= link_to conv, class: "flex items-center gap-4 p-5 hover:bg-emerald-50/50 transition-colors group" do %>
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-100 to-green-50 border-2 border-emerald-200 flex items-center justify-center flex-shrink-0">
+              <span class="text-xl font-black text-emerald-700"><%= conv.other_user(current_user).email.first.upcase %></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-emerald-900 group-hover:text-emerald-700 truncate">
+                  <%= conv.other_user(current_user).email.split('@').first.titleize %>
+                </h3>
+                <span class="text-xs text-gray-400 flex-shrink-0 ml-2">
+                  <%= conv.messages.last&.created_at ? time_ago_in_words(conv.messages.last.created_at) + " ago" : "" %>
+                </span>
+              </div>
+              <p class="text-sm text-gray-500 truncate">
+                <%= conv.messages.last&.body&.truncate(60) || "Nouvelle conversation" %>
+              </p>
+            </div>
+            <% if conv.unread_count_for(current_user) > 0 %>
+              <span class="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                <%= conv.unread_count_for(current_user) %>
+              </span>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-16">
+        <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-emerald-300">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-emerald-900 mb-2">Aucun message</h3>
+        <p class="text-gray-500">Connectez-vous avec un vendeur depuis une boutique ou un produit pour commencer à discuter.</p>
+        <div class="mt-6 flex gap-3 justify-center">
+          <%= link_to "Voir les boutiques", stores_path, class: "inline-flex items-center gap-2 bg-emerald-600 text-white font-bold px-6 py-3 rounded-full hover:bg-emerald-700 transition-colors text-sm" %>
+          <%= link_to "Voir les produits", items_path, class: "inline-flex items-center gap-2 bg-white text-emerald-700 font-bold px-6 py-3 rounded-full border border-emerald-200 hover:bg-emerald-50 transition-colors text-sm" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

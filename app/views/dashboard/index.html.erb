@@ -1,0 +1,154 @@
+<% content_for :title, "Tableau de bord" %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Bannière de bienvenue -->
+  <div class="bg-gradient-to-r from-emerald-700 via-emerald-600 to-green-500 rounded-3xl p-8 md:p-12 mb-10 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="dollar-float-local df-1 text-white/5">$</div>
+      <div class="dollar-float-local df-3 text-white/5">$</div>
+      <div class="dollar-float-local df-5 text-white/8">$</div>
+    </div>
+    <div class="relative z-10">
+      <h1 class="text-3xl md:text-4xl font-black text-white mb-2">Bienvenue, <%= current_user.email.split('@').first.capitalize %> !</h1>
+      <p class="text-emerald-100 text-lg">Gérez vos boutiques, produits et messages en un seul endroit.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Colonne de gauche : Boutique + Produits -->
+    <div class="lg:col-span-2 space-y-8">
+      <!-- Ma Boutique -->
+      <div class="bg-white rounded-2xl border border-emerald-100 p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-black text-emerald-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-emerald-600">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72" />
+            </svg>
+            Ma Boutique
+          </h2>
+          <% unless current_user.has_store? %>
+            <%= link_to new_store_path, class: "text-sm font-bold bg-emerald-600 text-white hover:bg-emerald-700 px-5 py-2.5 rounded-full transition-colors" do %>
+              + Créer une boutique
+            <% end %>
+          <% end %>
+        </div>
+
+        <% if @my_store.present? %>
+          <div class="flex items-center gap-4 p-4 bg-emerald-50/50 rounded-xl">
+            <% if @my_store.logo.attached? %>
+              <div class="w-16 h-16 rounded-2xl overflow-hidden border-2 border-emerald-200 flex-shrink-0">
+                <%= image_tag @my_store.logo, class: "w-full h-full object-cover" %>
+              </div>
+            <% else %>
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-100 to-green-50 border-2 border-emerald-200 flex items-center justify-center flex-shrink-0">
+                <span class="text-2xl font-black text-emerald-500"><%= @my_store.name.first.upcase %></span>
+              </div>
+            <% end %>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-bold text-emerald-900 text-lg truncate"><%= @my_store.name %></h3>
+              <p class="text-sm text-gray-500 truncate"><%= @my_store.description&.truncate(60) %></p>
+            </div>
+            <%= link_to "Voir", @my_store, class: "text-sm font-bold text-emerald-600 hover:text-emerald-800 transition-colors flex-shrink-0" %>
+          </div>
+        <% else %>
+          <div class="text-center py-8 text-gray-400">
+            <p class="font-semibold">Vous n'avez pas encore de boutique.</p>
+            <p class="text-sm mt-1">Créez-en une pour commencer à vendre !</p>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Produits récents -->
+      <div class="bg-white rounded-2xl border border-emerald-100 p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-black text-emerald-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-emerald-600">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+            Produits Récents
+          </h2>
+          <%= link_to new_item_path, class: "text-sm font-bold bg-emerald-600 text-white hover:bg-emerald-700 px-5 py-2.5 rounded-full transition-colors" do %>
+            + Nouveau produit
+          <% end %>
+        </div>
+
+        <% if @recent_items.any? %>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <% @recent_items.each do |item| %>
+              <%= link_to item, class: "block p-4 bg-gray-50 rounded-xl hover:bg-emerald-50 transition-colors border border-gray-100 hover:border-emerald-200 group" do %>
+                <div class="flex items-start gap-3">
+                  <% if item.images.attached? %>
+                    <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-white">
+                      <%= image_tag item.images.first, class: "w-full h-full object-cover" %>
+                    </div>
+                  <% else %>
+                    <div class="w-16 h-16 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-emerald-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                      </svg>
+                    </div>
+                  <% end %>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-emerald-900 group-hover:text-emerald-700 truncate"><%= item.name %></h4>
+                    <p class="text-sm font-bold text-emerald-600"><%= number_to_currency(item.price, unit: "FCFA ", precision: 0) %></p>
+                    <span class="text-xs text-gray-400 inline-block mt-0.5"><%= item.category %></span>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-8 text-gray-400">
+            <p class="font-semibold">Aucun produit pour le moment.</p>
+            <p class="text-sm mt-1">Publiez votre premier produit !</p>
+          </div>
+        <% end %>
+        <div class="mt-4 text-center">
+          <%= link_to "Voir tous les produits →", items_path, class: "text-sm font-bold text-emerald-600 hover:text-emerald-800 transition-colors" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne de droite : Conversations -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-2xl border border-emerald-100 p-6 shadow-sm sticky top-28">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-black text-emerald-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-emerald-600">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            Messages
+          </h2>
+          <%= link_to conversations_path, class: "text-sm font-bold text-emerald-600 hover:text-emerald-800" do %>
+            Voir tout
+          <% end %>
+        </div>
+
+        <% if @conversations.any? %>
+          <div class="space-y-2">
+            <% @conversations.each do |conv| %>
+              <%= link_to conv, class: "flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 transition-colors group" do %>
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-100 to-green-50 border border-emerald-200 flex items-center justify-center flex-shrink-0">
+                  <span class="text-sm font-bold text-emerald-700"><%= conv.other_user(current_user).email.first.upcase %></span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-bold text-emerald-900 truncate group-hover:text-emerald-700">
+                    <%= conv.other_user(current_user).email.split('@').first %>
+                  </p>
+                  <p class="text-xs text-gray-400 truncate">
+                    <%= conv.messages.last&.body&.truncate(30) || "Nouvelle conversation" %>
+                  </p>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-6 text-gray-400">
+            <p class="font-semibold">Pas de messages</p>
+            <p class="text-xs mt-1">Connectez-vous avec un vendeur pour commencer.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<%# Determine if we're on the home page for styling %>
+<% is_home = (controller_name == "pages" && action_name == "home") %>
+
+<header class="bg-white border-b border-emerald-100 sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      
+      <!-- Logo -->
+      <a href="<%= (user_signed_in? && !is_home) ? items_path : root_path %>" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-green-400 flex items-center justify-center shadow-md">
+          <span class="text-white font-black text-lg">DM</span>
+        </div>
+        <span class="text-xl font-black tracking-tight text-emerald-800">
+          DigiMarket<span class="text-green-500 font-medium text-sm ml-0.5">UY1</span>
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+        <% if user_signed_in? && !is_home %>
+          <%= link_to items_path, class: "text-sm font-semibold #{controller_name == 'items' ? 'text-emerald-600' : 'text-emerald-900/60 hover:text-emerald-700'} transition-colors" do %>
+            Produits
+          <% end %>
+          <%= link_to stores_path, class: "text-sm font-semibold #{controller_name == 'stores' ? 'text-emerald-600' : 'text-emerald-900/60 hover:text-emerald-700'} transition-colors" do %>
+            Boutiques
+          <% end %>
+          <%= link_to conversations_path, class: "text-sm font-semibold #{controller_name == 'conversations' ? 'text-emerald-600' : 'text-emerald-900/60 hover:text-emerald-700'} transition-colors flex items-center gap-1" do %>
+            Messages
+            <% unread = current_user.conversations.sum { |c| c.unread_count_for(current_user) } %>
+            <% if unread > 0 %>
+              <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full"><%= unread %></span>
+            <% end %>
+          <% end %>
+          <%= link_to dashboard_path, class: "text-sm font-semibold text-emerald-900/60 hover:text-emerald-700 transition-colors" do %>
+            Tableau de bord
+          <% end %>
+          <div class="flex items-center gap-3 ml-2">
+            <% if current_user.has_store? %>
+              <%= link_to "Ma boutique", current_user.store, class: "text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-4 py-2 rounded-full transition-colors" %>
+            <% else %>
+              <%= link_to "+ Boutique", new_store_path, class: "text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2 rounded-full transition-colors" %>
+            <% end %>
+            <%= button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "text-xs font-bold text-red-500 hover:text-red-700 transition-colors cursor-pointer bg-transparent border-none" %>
+          </div>
+        <% else %>
+          <%= link_to "Boutiques", stores_path, class: "text-sm font-semibold text-emerald-900/60 hover:text-emerald-700 transition-colors" %>
+          <%= link_to "Produits", items_path, class: "text-sm font-semibold text-emerald-900/60 hover:text-emerald-700 transition-colors" %>
+          <%= link_to "Connexion", new_user_session_path, class: "text-sm font-bold text-emerald-700 hover:text-emerald-900 transition-colors px-4 py-2 rounded-full border border-emerald-100 hover:bg-emerald-50/50" %>
+          <%= link_to "S'inscrire", new_user_registration_path, class: "text-sm font-bold bg-gradient-to-r from-emerald-600 to-green-500 text-white shadow-md px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:from-emerald-700 hover:to-green-600" %>
+        <% end %>
+      </nav>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" class="md:hidden relative w-10 h-10 flex items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 focus:outline-none" onclick="toggleMobileMenu()" aria-label="Menu">
+        <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 hidden">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Full-Screen Menu Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 bg-emerald-900 md:hidden hidden flex flex-col">
+    <div class="flex items-center justify-between px-4 h-16 border-b border-emerald-800">
+      <a href="<%= (user_signed_in? && !is_home) ? items_path : root_path %>" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-green-400 flex items-center justify-center shadow-md">
+          <span class="text-white font-black text-lg">DM</span>
+        </div>
+        <span class="text-xl font-black tracking-tight text-white">DigiMarket<span class="text-green-400 font-medium text-sm ml-0.5">UY1</span></span>
+      </a>
+      <button onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center text-white/80" aria-label="Fermer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="flex-1 flex flex-col items-center justify-center gap-8 px-8">
+      <% if user_signed_in? && !is_home %>
+        <%= link_to "Produits", items_path, class: "text-2xl font-black text-white hover:text-emerald-300 transition-colors", onclick: "toggleMobileMenu()" %>
+        <%= link_to "Boutiques", stores_path, class: "text-2xl font-black text-white hover:text-emerald-300 transition-colors", onclick: "toggleMobileMenu()" %>
+        <%= link_to "Messages", conversations_path, class: "text-2xl font-black text-white hover:text-emerald-300 transition-colors", onclick: "toggleMobileMenu()" %>
+        <%= link_to "Tableau de bord", dashboard_path, class: "text-2xl font-black text-white hover:text-emerald-300 transition-colors", onclick: "toggleMobileMenu()" %>
+        <div class="flex flex-col items-center gap-4 pt-4 border-t border-emerald-800 w-full">
+          <% if current_user.has_store? %>
+            <%= link_to "Ma boutique", current_user.store, class: "text-lg font-bold bg-white/20 text-white px-8 py-3 rounded-full w-full text-center hover:bg-white/30", onclick: "toggleMobileMenu()" %>
+          <% else %>
+            <%= link_to "+ Créer une boutique", new_store_path, class: "text-lg font-bold bg-emerald-600 text-white px-8 py-3 rounded-full w-full text-center hover:bg-emerald-700 transition-colors", onclick: "toggleMobileMenu()" %>
+          <% end %>
+          <%= button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "text-lg font-bold text-red-300 cursor-pointer bg-transparent border-none hover:text-red-200" %>
+        </div>
+      <% else %>
+        <%= link_to "Boutiques", stores_path, class: "text-2xl font-black text-white hover:text-emerald-300 transition-colors", onclick: "toggleMobileMenu()" %>
+        <%= link_to "Produits", items_path, class: "text-2xl font-black text-white hover:text-emerald-300 transition-colors", onclick: "toggleMobileMenu()" %>
+        <%= link_to "Connexion", new_user_session_path, class: "text-lg font-bold text-white border-2 border-white/30 px-8 py-3 rounded-full w-full text-center hover:bg-white/10", onclick: "toggleMobileMenu()" %>
+        <%= link_to "S'inscrire", new_user_registration_path, class: "text-lg font-bold bg-gradient-to-r from-emerald-600 to-green-500 text-white px-8 py-3 rounded-full w-full text-center shadow-lg", onclick: "toggleMobileMenu()" %>
+      <% end %>
+    </nav>
+  </div>
+</header>
+
+<script>
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-open-icon');
+  const closeIcon = document.getElementById('menu-close-icon');
+  if (menu.classList.contains('hidden')) {
+    menu.classList.remove('hidden');
+    openIcon.classList.add('hidden');
+    closeIcon.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  } else {
+    menu.classList.add('hidden');
+    openIcon.classList.remove('hidden');
+    closeIcon.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+}
+</script>

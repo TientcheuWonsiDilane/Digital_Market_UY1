@@ -1,0 +1,23 @@
+<div id="<%= dom_id item %>" class="p-4 bg-white rounded-xl border border-gray-100">
+  <div class="flex items-start gap-4">
+    <% if item.images.attached? %>
+      <div class="w-20 h-20 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0 bg-gray-50">
+        <%= image_tag item.images.first, class: "w-full h-full object-cover" %>
+      </div>
+    <% else %>
+      <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200 flex items-center justify-center flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-emerald-300">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5z" />
+        </svg>
+      </div>
+    <% end %>
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-emerald-900"><%= item.name %></h3>
+      <p class="text-lg font-black text-emerald-600"><%= number_to_currency(item.price, unit: "FCFA ", precision: 0) %></p>
+      <div class="flex items-center gap-2 mt-1">
+        <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full"><%= item.category %></span>
+        <span class="text-xs text-gray-400"><%= item.user.email.split('@').first %></span>
+      </div>
+    </div>
+  </div>
+</div>

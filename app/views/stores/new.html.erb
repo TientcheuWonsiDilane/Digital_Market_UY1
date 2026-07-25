@@ -1,0 +1,11 @@
+<% content_for :title, "New Store" %>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white rounded-3xl border border-emerald-100 p-8 shadow-sm">
+    <div class="mb-8">
+      <h1 class="text-3xl font-black text-emerald-900">Create Your Store</h1>
+      <p class="text-sm text-gray-500 mt-1">Set up your campus store and start selling to fellow students.</p>
+    </div>
+    <%= render "form", store: @store %>
+  </div>
+</div>

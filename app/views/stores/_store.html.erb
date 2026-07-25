@@ -1,0 +1,18 @@
+<div id="<%= dom_id store %>" class="p-4 bg-white rounded-xl border border-gray-100">
+  <div class="flex items-center gap-4">
+    <% if store.logo.attached? %>
+      <div class="w-14 h-14 rounded-xl overflow-hidden border border-emerald-200 flex-shrink-0">
+        <%= image_tag store.logo, class: "w-full h-full object-cover" %>
+      </div>
+    <% else %>
+      <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-100 to-green-50 border border-emerald-200 flex items-center justify-center flex-shrink-0">
+        <span class="text-xl font-black text-emerald-500"><%= store.name.first.upcase %></span>
+      </div>
+    <% end %>
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-emerald-900"><%= store.name %></h3>
+      <p class="text-sm text-gray-500 truncate"><%= store.description&.truncate(50) %></p>
+    </div>
+    <span class="text-xs font-semibold text-gray-400"><%= store.items.count %> items</span>
+  </div>
+</div>

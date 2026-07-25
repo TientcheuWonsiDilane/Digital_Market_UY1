@@ -1,1 +1,93 @@
 @import "tailwindcss";
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(105vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(40px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes floatUpLocal {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.25;
+  }
+  90% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-250px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(8deg);
+  }
+}
+
+.dollar-float {
+  position: absolute;
+  bottom: -60px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: currentColor;
+  user-select: none;
+  pointer-events: none;
+  animation: floatUp 12s linear infinite;
+  z-index: 1;
+}
+
+.dollar-float-local {
+  position: absolute;
+  bottom: -40px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: currentColor;
+  user-select: none;
+  pointer-events: none;
+  animation: floatUpLocal 10s linear infinite;
+  z-index: 1;
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 6s ease-in-out infinite;
+}
+
+/* Delay and speed variations for the floating dollar signs */
+.df-1 { left: 8%; animation-duration: 11s; animation-delay: 0s; }
+.df-2 { left: 22%; animation-duration: 15s; animation-delay: 2s; font-size: 3.5rem; color: rgba(34, 197, 94, 0.12); }
+.df-3 { left: 38%; animation-duration: 13s; animation-delay: 5s; font-size: 2rem; }
+.df-4 { left: 52%; animation-duration: 17s; animation-delay: 1s; font-size: 2.8rem; color: rgba(34, 197, 94, 0.15); }
+.df-5 { left: 68%; animation-duration: 12s; animation-delay: 6s; font-size: 2.2rem; }
+.df-6 { left: 82%; animation-duration: 16s; animation-delay: 3s; font-size: 4rem; color: rgba(34, 197, 94, 0.08); }
+.df-7 { left: 93%; animation-duration: 14s; animation-delay: 8s; font-size: 2.6rem; color: rgba(34, 197, 94, 0.18); }
+
+/* Overlapping image cards styling and transitions */
+.card-glow {
+  box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.2);
+  border: 4px solid rgba(255, 255, 255, 0.95);
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-glow:hover {
+  box-shadow: 0 30px 50px -10px rgba(16, 185, 129, 0.35);
+  border-color: rgba(34, 197, 94, 1);
+}

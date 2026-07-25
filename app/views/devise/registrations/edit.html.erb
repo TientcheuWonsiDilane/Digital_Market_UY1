@@ -1,0 +1,80 @@
+<div class="w-full min-h-[calc(100vh-64px)] flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-emerald-50/30 p-4 md:p-8 relative overflow-hidden">
+  
+  <!-- Floating Dollars Background -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="dollar-float df-1 text-emerald-500/10">$</div>
+    <div class="dollar-float df-2 text-emerald-500/5">$</div>
+    <div class="dollar-float df-3 text-emerald-500/10">$</div>
+    <div class="dollar-float df-4 text-emerald-500/8">$</div>
+    <div class="dollar-float df-5 text-emerald-500/12">$</div>
+  </div>
+
+  <!-- Form Card -->
+  <div class="w-full max-w-lg bg-white rounded-3xl border border-emerald-100 p-8 md:p-10 shadow-xl relative z-10 my-8">
+    
+    <div class="mb-6">
+      <%= link_to dashboard_path, class: "text-sm font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-2 mb-6" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        <span>Retour au tableau de bord</span>
+      <% end %>
+      
+      <h2 class="text-2xl font-black text-emerald-900">Modifier mon compte</h2>
+      <p class="text-sm text-gray-500 mt-1 font-medium">Mettez à jour les informations de votre profil de connexion.</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-5" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :email, "Adresse email", class: "block text-sm font-semibold text-emerald-900 mb-1.5" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div class="bg-amber-50 border border-amber-200 text-amber-800 rounded-xl p-4 text-xs font-medium">
+          En attente de confirmation pour : <%= resource.unconfirmed_email %>
+        </div>
+      <% end %>
+
+      <div class="field border-t border-gray-100 pt-4">
+        <div class="flex justify-between items-center mb-1">
+          <%= f.label :password, "Nouveau mot de passe", class: "block text-sm font-semibold text-emerald-900" %>
+          <span class="text-[10px] text-gray-400 font-semibold">(laisser vide si inchangé)</span>
+        </div>
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
+        <% if @minimum_password_length %>
+          <p class="text-[11px] text-gray-400 mt-1"><%= @minimum_password_length %> caractères minimum</p>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation, "Confirmer le nouveau mot de passe", class: "block text-sm font-semibold text-emerald-900 mb-1.5" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
+      </div>
+
+      <div class="field border-t border-gray-100 pt-4">
+        <%= f.label :current_password, "Mot de passe actuel", class: "block text-sm font-semibold text-emerald-900 mb-1" %>
+        <p class="text-[11px] text-gray-400 mb-2 font-medium">Nous avons besoin de votre mot de passe actuel pour valider les modifications.</p>
+        <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "••••••••", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 pt-3">
+        <%= f.submit "Mettre à jour", class: "bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer text-sm flex-1 text-center" %>
+        <%= link_to "Annuler", :back, class: "text-sm font-bold text-gray-500 hover:text-gray-700 px-8 py-3.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all duration-300 text-center" %>
+      </div>
+    <% end %>
+
+    <div class="mt-10 pt-8 border-t border-gray-100">
+      <h3 class="text-lg font-bold text-red-600 mb-3">Zone de danger</h3>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-red-50 rounded-2xl border border-red-100 gap-4">
+        <div>
+          <p class="font-bold text-red-800 text-sm">Supprimer mon compte</p>
+          <p class="text-xs text-red-600">Cette action est définitive et irréversible.</p>
+        </div>
+        <%= button_to "Supprimer le compte", registration_path(resource_name), data: { confirm: "Êtes-vous sûr ?", turbo_confirm: "Êtes-vous sûr ?" }, method: :delete, class: "bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all cursor-pointer whitespace-nowrap" %>
+      </div>
+    </div>
+  </div>
+</div>

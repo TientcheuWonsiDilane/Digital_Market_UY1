@@ -1,0 +1,69 @@
+<% content_for :title, "Produits" %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+      <h1 class="text-3xl font-black text-emerald-900">Produits</h1>
+      <p class="text-sm text-gray-500 mt-1">Trouvez tout ce dont vous avez besoin auprès des étudiants du campus.</p>
+    </div>
+    <% if user_signed_in? %>
+      <%= link_to new_item_path, class: "inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-green-500 text-white font-bold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+        Publier un produit
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-4 mb-8">
+    <%= form_with url: items_path, method: :get, class: "flex-1", data: { turbo_action: "replace" } do |f| %>
+      <div class="relative">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+        <%= f.search_field :search, value: params[:search], placeholder: "Rechercher un produit...", class: "w-full pl-12 pr-4 py-3 rounded-2xl border border-gray-200 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all duration-300 text-sm" %>
+      </div>
+    <% end %>
+    <div class="flex gap-2 flex-wrap">
+      <%= link_to "Tous", items_path, class: "px-4 py-2.5 rounded-full text-sm font-bold transition-all duration-200 #{params[:category].blank? ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50'}" %>
+      <% @categories.each do |cat| %>
+        <%= link_to cat, items_path(category: cat, search: params[:search]), class: "px-4 py-2.5 rounded-full text-sm font-bold transition-all duration-200 #{params[:category] == cat ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50'}" %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @items.any? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% @items.each do |item| %>
+        <%= link_to item, class: "group bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:border-emerald-300 transition-all duration-300" do %>
+          <div class="h-52 bg-gray-100 overflow-hidden relative">
+            <% if item.images.attached? %>
+              <%= image_tag item.images.first, class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" %>
+            <% else %>
+              <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-50 to-green-50">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-16 h-16 text-emerald-300"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
+              </div>
+            <% end %>
+            <span class="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur-sm text-emerald-700 font-bold px-2.5 py-1 rounded-full shadow-sm"><%= item.category %></span>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-emerald-900 group-hover:text-emerald-700 truncate"><%= item.name %></h3>
+            <p class="text-xl font-black text-emerald-600 mt-1"><%= number_to_currency(item.price, unit: "FCFA ", precision: 0) %></p>
+            <div class="flex items-center justify-between mt-3 pt-2 border-t border-gray-100">
+              <span class="text-xs text-gray-400 flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                <%= item.user.email.split('@').first %>
+              </span>
+              <span class="text-xs text-gray-400">il y a <%= time_ago_in_words(item.created_at) %></span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-20">
+      <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-emerald-300"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /></svg>
+      </div>
+      <h3 class="text-xl font-bold text-emerald-900 mb-2">Aucun produit trouvé</h3>
+      <p class="text-gray-500"><%= params[:search].present? ? 'Essayez une autre recherche.' : 'Soyez le premier à publier un produit !' %></p>
+    </div>
+  <% end %>
+</div>
