@@ -30,7 +30,7 @@
           La plateforme d'échange idéale pour les étudiants de l'Université de Yaoundé I. Créez votre boutique en quelques clics, proposez vos articles, livres, électroniques ou services, et achetez directement auprès de vos camarades de campus.
         </p>
         
-        <div class="text flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
+        <div class="text1 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
           <a href="<%= items_path %>" class="inline-flex items-center justify-center gap-2 text-center text-white bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 px-8 py-4 rounded-full font-bold shadow-lg shadow-emerald-600/20 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95">
             <span>Explorer les produits</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
@@ -243,7 +243,7 @@ ScrollTrigger.refresh();
 
   
 
-    gsap.from('.text1', {
+    gsap.from('.text', {
       x: -200,
       opacity: 0,
       duration: 1,
@@ -255,7 +255,7 @@ ScrollTrigger.refresh();
     });
   
 
-    const split1 = new SplitType(".text", { types: "lines" });
+    const split1 = new SplitType("text1", { types: "lines" });
 
     split1.lines.forEach((line) => {
       const wrapper1 = document.createElement("div");
