@@ -28,8 +28,13 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="field">
+        <%= f.label :username, "Nom d'utilisateur", class: "block text-sm font-semibold text-emerald-900 mb-1.5" %>
+        <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
+      </div>
+
+      <div class="field">
         <%= f.label :email, "Adresse email", class: "block text-sm font-semibold text-emerald-900 mb-1.5" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
+        <%= f.email_field :email, autocomplete: "email", class: "w-full rounded-xl bg-gray-50/50 border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-gray-900 py-3 px-4 transition-all duration-300 text-sm outline-none" %>
       </div>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

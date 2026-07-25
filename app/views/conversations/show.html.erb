@@ -10,10 +10,10 @@
         </svg>
       <% end %>
       <div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-100 to-green-50 border-2 border-emerald-200 flex items-center justify-center">
-        <span class="text-lg font-black text-emerald-700"><%= @conversation.other_user(current_user).email.first.upcase %></span>
+        <span class="text-lg font-black text-emerald-700"><%= @conversation.other_user(current_user).username.first.upcase %></span>
       </div>
       <div>
-        <h2 class="font-bold text-emerald-900"><%= @conversation.other_user(current_user).email %></h2>
+        <h2 class="font-bold text-emerald-900"><%= @conversation.other_user(current_user).username %></h2>
         <p class="text-xs text-gray-400">
           <%= @conversation.store.present? ? "Via: #{@conversation.store.name}" : "Conversation directe" %>
         </p>

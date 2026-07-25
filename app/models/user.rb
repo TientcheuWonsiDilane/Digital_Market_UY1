@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :username, presence: true, uniqueness: { case_sensitive: false },
+                       length: { minimum: 3, maximum: 30 },
+                       format: { with: /\A[a-zA-Z0-9_]+\z/, message: "ne doit contenir que des lettres, chiffres et underscores" }
+
   has_many :items, dependent: :destroy
   has_one :store, dependent: :destroy
   has_many :messages, dependent: :destroy

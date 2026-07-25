@@ -16,7 +16,7 @@
       <p class="text-lg font-black text-emerald-600"><%= number_to_currency(item.price, unit: "FCFA ", precision: 0) %></p>
       <div class="flex items-center gap-2 mt-1">
         <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full"><%= item.category %></span>
-        <span class="text-xs text-gray-400"><%= item.user.email.split('@').first %></span>
+        <span class="text-xs text-gray-400"><%= item.user.username %></span>
       </div>
     </div>
   </div>

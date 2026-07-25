@@ -9,7 +9,7 @@
       <div class="dollar-float-local df-5 text-white/8">$</div>
     </div>
     <div class="relative z-10">
-      <h1 class="text-3xl md:text-4xl font-black text-white mb-2">Bienvenue, <%= current_user.email.split('@').first.capitalize %> !</h1>
+      <h1 class="text-3xl md:text-4xl font-black text-white mb-2">Bienvenue, <%= current_user.username.capitalize %> !</h1>
       <p class="text-emerald-100 text-lg">Gérez vos boutiques, produits et messages en un seul endroit.</p>
     </div>
   </div>
@@ -129,11 +129,11 @@
             <% @conversations.each do |conv| %>
               <%= link_to conv, class: "flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 transition-colors group" do %>
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-100 to-green-50 border border-emerald-200 flex items-center justify-center flex-shrink-0">
-                  <span class="text-sm font-bold text-emerald-700"><%= conv.other_user(current_user).email.first.upcase %></span>
+                  <span class="text-sm font-bold text-emerald-700"><%= conv.other_user(current_user).username.first.upcase %></span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-bold text-emerald-900 truncate group-hover:text-emerald-700">
-                    <%= conv.other_user(current_user).email.split('@').first %>
+                    <%= conv.other_user(current_user).username %>
                   </p>
                   <p class="text-xs text-gray-400 truncate">
                     <%= conv.messages.last&.body&.truncate(30) || "Nouvelle conversation" %>

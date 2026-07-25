@@ -16,12 +16,12 @@
         <% @conversations.each do |conv| %>
           <%= link_to conv, class: "flex items-center gap-4 p-5 hover:bg-emerald-50/50 transition-colors group" do %>
             <div class="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-100 to-green-50 border-2 border-emerald-200 flex items-center justify-center flex-shrink-0">
-              <span class="text-xl font-black text-emerald-700"><%= conv.other_user(current_user).email.first.upcase %></span>
+              <span class="text-xl font-black text-emerald-700"><%= conv.other_user(current_user).username.first.upcase %></span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between mb-1">
                 <h3 class="font-bold text-emerald-900 group-hover:text-emerald-700 truncate">
-                  <%= conv.other_user(current_user).email.split('@').first.titleize %>
+                  <%= conv.other_user(current_user).username.titleize %>
                 </h3>
                 <span class="text-xs text-gray-400 flex-shrink-0 ml-2">
                   <%= conv.messages.last&.created_at ? time_ago_in_words(conv.messages.last.created_at) + " ago" : "" %>

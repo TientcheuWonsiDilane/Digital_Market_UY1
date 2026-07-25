@@ -2,7 +2,7 @@
   <div class="max-w-[80%] <%= message.user_id == (defined?(current_user) && current_user ? current_user.id : nil) ? 'bg-gradient-to-r from-emerald-600 to-green-500 text-white rounded-2xl rounded-br-md' : 'bg-white text-gray-800 border border-gray-200 rounded-2xl rounded-bl-md' %> px-5 py-3 shadow-sm">
     <p class="text-sm leading-relaxed"><%= message.body %></p>
     <div class="flex items-center justify-between gap-2 mt-1">
-      <span class="text-xs <%= message.user_id == (defined?(current_user) && current_user ? current_user.id : nil) ? 'text-emerald-100' : 'text-gray-400' %>"><%= message.user.email.split('@').first %></span>
+      <span class="text-xs <%= message.user_id == (defined?(current_user) && current_user ? current_user.id : nil) ? 'text-emerald-100' : 'text-gray-400' %>"><%= message.user.username %></span>
       <span class="text-xs <%= message.user_id == (defined?(current_user) && current_user ? current_user.id : nil) ? 'text-emerald-100' : 'text-gray-400' %>"><%= message.created_at.strftime("%H:%M") %></span>
     </div>
   </div>
