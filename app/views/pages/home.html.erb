@@ -1,7 +1,7 @@
 <div id="home" class="w-full relative overflow-hidden bg-gradient-to-b from-white via-green-50/30 to-white text-gray-800">
 
   <!-- Hero Section -->
-  <header class="relative min-h-[calc(100vh-64px)] md:min-h-[750px] flex flex-col justify-between overflow-hidden px-6 md:px-24 pt-12 pb-16">
+  <header class="relative min-h-[calc(100vh-64px)] md:min-h-[750px] flex flex-col justify-between overflow-hidden px-6 md:px-24 pt-3 pb-16">
     
     <!-- Floating Dollar Signs - Active autour des images -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -22,15 +22,15 @@
       
       <div class=" hero-text lg:col-span-7 flex flex-col items-start text-left space-y-6 max-w-2xl">
       
-        <h2 class="text-4xl md:text-6xl font-black tracking-tight text-emerald-950 leading-tight">
+        <h2 class="text text-4xl md:text-6xl font-black tracking-tight text-emerald-950 leading-tight">
           Vendez et achetez sur le campus avec <span class="bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent">DigiMarket UY1</span>
         </h2>
         
-        <p class="text-lg text-gray-600 leading-relaxed max-w-xl">
+        <p class=" text1 text-lg text-gray-600 leading-relaxed max-w-xl">
           La plateforme d'échange idéale pour les étudiants de l'Université de Yaoundé I. Créez votre boutique en quelques clics, proposez vos articles, livres, électroniques ou services, et achetez directement auprès de vos camarades de campus.
         </p>
         
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
+        <div class="text flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
           <a href="<%= items_path %>" class="inline-flex items-center justify-center gap-2 text-center text-white bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 px-8 py-4 rounded-full font-bold shadow-lg shadow-emerald-600/20 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95">
             <span>Explorer les produits</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
@@ -223,6 +223,7 @@ ScrollTrigger.refresh();
 
 
     const imgTl = gsap.timeline({
+      delay: 1.5,
       scrollTrigger: {
         trigger: ".imgc", 
         start: "top 70%",
@@ -230,40 +231,50 @@ ScrollTrigger.refresh();
     });
 
     imgTl.fromTo('.img1', { x: 300, y: 150, opacity: 0 },
-        { x: 0, y: 0, opacity: 1, duration: 1.2, ease: "power2.out", clearProps: "transform,opacity" }
+        { x: 0, y: 0, opacity: 1, duration: 1.2, ease: "power2.out", }
       )
-      .fromTo('.img2', { y: 250, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "power2.out", clearProps: "transform,opacity" }
-      , "-=0.4") 
-      .fromTo('.img3', { y: -250, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "power2.out", clearProps: "transform,opacity" }
-      , "-=0.4");
+      .fromTo('.img2', { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power2.out", }, "-=0.4") 
+      .fromTo('.img3', { y: -200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power2.out", }, "-=0.4");
   
 
   const heroText = document.querySelector(".hero-text");
 
-  if (heroText) {
-    const split = new SplitType(heroText, { types: "lines" });
+  
 
-    split.lines.forEach((line) => {
-      const wrapper = document.createElement("div");
-      wrapper.style.overflow = "hidden";
-      line.parentNode.insertBefore(wrapper, line);
-      wrapper.appendChild(line);
-    });
-
-    gsap.from(split.lines, {
-      y: "100%",
+    gsap.from('.text1', {
+      x: -200,
       opacity: 0,
-      duration: 1.2,
-      stagger: 0.2, // Apparition ligne par ligne
+      duration: 1,
       ease: "power3.out",
       scrollTrigger: {
         trigger: heroText,
         start: "top 80%",
       },
     });
-  }
+  
+
+    const split1 = new SplitType(".text", { types: "lines" });
+
+    split1.lines.forEach((line) => {
+      const wrapper1 = document.createElement("div");
+      wrapper1.style.overflow = "hidden";
+      line.parentNode.insertBefore(wrapper1, line);
+      wrapper1.appendChild(line);
+    });
+
+    gsap.from(split1.lines, {
+      y: "100%",
+      opacity: 0,
+      duration: 1.5,
+      stagger: 0.3,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".text",
+        start: "top 80%",
+      },
+    });
 
   ScrollTrigger.refresh();
 });
